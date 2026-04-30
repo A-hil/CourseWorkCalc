@@ -1,6 +1,6 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route} from 'react-router-dom';
 import CalcBlock from './CalcBlock'
-import InputNum from './InputNum'
+import InputNum from './InputForm'
 import './App.css'
 
 function App() {
@@ -8,7 +8,6 @@ function App() {
         <Routes>
     {/* Главная страница с вводом */}
       <Route path="/" element={<InputNum />} />
-      
       {/* Страница вычислений */}
       <Route path="/calc" element={<CalcBlock />} />
       
