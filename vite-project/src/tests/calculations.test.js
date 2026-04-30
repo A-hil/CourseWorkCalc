@@ -1,5 +1,8 @@
-import { calculateX, canonicalPolynomial, shellSort } from '../core/calculations';
-import { Dan } from '../core/dan';
+// vite-project/src/tests/calculations.test.js
+
+// Используем ES modules вместо require
+import { calculateX, canonicalPolynomial, shellSort, computeAll } from '../core/Calculations.js';
+import Dan from '../core/Dan.js';
 
 describe('Вариант 28 - Формула X', () => {
     test('X[0] использует p=1', () => {
@@ -134,7 +137,6 @@ describe('Интеграционный тест', () => {
         dan.rangeMax = 10;
         dan.isOdd = true;
         
-        const { computeAll } = require('../core/calculations');
         const result = computeAll(dan);
         
         // Проверяем, что все массивы созданы

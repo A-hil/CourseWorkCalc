@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Dan } from '../core/Dan';
+import { Dan } from './core/Dan.js';
 
 export default function InputForm() {
     const navigate = useNavigate();
