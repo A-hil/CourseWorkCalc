@@ -1,2 +1,29 @@
 @import "tailwindcss";
 
+/* Дополнительные анимации для плавности */
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(168, 85, 247, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+    }
+}
+
+input:focus {
+    animation: pulse-glow 1.5s infinite;
+}
+
+/* Эффект при наведении на карточки */
+.backdrop-blur-md {
+    transition: all 0.3s ease;
+}
+
+.backdrop-blur-md:hover {
+    transform: translateY(-2px);
+}
+
+/* Анимация для ползунка прокрутки */
+.cursor-grab:active {
+    cursor: grabbing;
+}
