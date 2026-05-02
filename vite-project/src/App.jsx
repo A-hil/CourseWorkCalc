@@ -5,11 +5,11 @@ import ResultsBlock from './ResultsBlock'
 
 function App() {
     return (
-        <Routes>
+      <Routes>
     {/* Главная страница с вводом */}
-      <Route path="/" element={<InputNum />} />
-      <Route path="/calc" element={<ResultsBlock />} />
-        </Routes>
+        <Route path="/" element={<InputNum />} />
+        <Route path="/calc" element={<ResultsBlock />} />
+      </Routes>
     );
        
          

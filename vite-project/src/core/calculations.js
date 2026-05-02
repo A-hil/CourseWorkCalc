@@ -2,41 +2,6 @@
 // ============================================
 // ВАРИАНТ 28 - ЧЕТНЫЙ
 // ============================================
-
-/**
- * Генерация случайной матрицы A (m x m)
- * @param {number} m - размерность
- * @param {number} min - минимальное значение
- * @param {number} max - максимальное значение
- * @returns {number[][]}
- */
-export const generateMatrixA = (m, min, max) => {
-    const matrix = [];
-    for (let i = 0; i < m; i++) {
-        matrix[i] = [];
-        for (let j = 0; j < m; j++) {
-            const randomValue = min + Math.random() * (max - min);
-            matrix[i][j] = Number(randomValue.toFixed(4));
-        }
-    }
-    return matrix;
-};
-
-/**
- * Генерация массива C (арифметическая прогрессия для четного варианта)
- * @param {number} m - размерность
- * @param {number} C0 - первый член прогрессии
- * @param {number} r - разность прогрессии
- * @returns {number[]}
- */
-export const generateArrayC = (m, C0, r) => {
-    const C = new Array(m);
-    for (let i = 0; i < m; i++) {
-        C[i] = Number((C0 + i * r).toFixed(4));
-    }
-    return C;
-};
-
 /**
  * Вычисление суммы диагонали матрицы A
  * @param {number[][]} A - матрица
@@ -207,41 +172,24 @@ export const shellSort = (arr) => {
  * @param {boolean} params.isOdd - Тип варианта (для 28 false).
  * @returns {Object} Результаты всех вычислений.
  */
-export const calculateAll = ({ m, b, rangeMin, rangeMax, C0, r, isOdd }) => {
-    // 1. Генерация промежуточных данных
-    const A = generateMatrixA(m, rangeMin, rangeMax);
-    const C = generateArrayC(m, C0, r);
-    const s = calculateS(A, isOdd);
+export const calculateAll = (inputData, pregeneratedData) => {
+    const { m, b, rangeMin, rangeMax, C0, r, isOdd } = inputData;
+    const A = pregeneratedData.A;
+    const C = pregeneratedData.C;
     
-    // 2. Основные вычисления
+    const s = calculateS(A, isOdd);
     const X = calculateX(A, C, b, s);
     const Y = interpolateCanonical(X);
     const Ysorted = shellSort(Y);
     
-    // 3. Возврат структурированного объекта
+    if (!pregeneratedData?.A || !pregeneratedData?.C) {
+        throw new Error('pregeneratedData не содержит A или C');
+    }
+
     return {
-        // Входные параметры (полезно для отладки и экспорта)
         input: { m, b, rangeMin, rangeMax, C0, r, isOdd },
-        
-        // Промежуточные результаты
-        intermediate: {
-            A,
-            C,
-            s: s,
-        },
-        
-        // Финальные результаты
-        final: {
-            X,
-            Y,
-            Ysorted,
-        },
-        
-        // Мета-информация
-        meta: {
-            timestamp: new Date().toISOString(),
-            variant: 28,
-            type: 'even',
-        }
+        intermediate: { A, C, s },
+        final: { X, Y, Ysorted },
+        meta: { timestamp: new Date().toISOString(), variant: 28, type: 'even' }
     };
 };

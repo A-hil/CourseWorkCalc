@@ -34,26 +34,51 @@ export default function InputNum() {
     isOdd: isOdd
 });
      const handleCalculate = () => {
+        console.log('🟣 previewData в момент вызова:', previewData);
         setIsOn(false); // размонтируем текущий компонент
-         updateData({
-        m: formData.m,
-        b: formData.b,
-        rangeMin: formData.rangeMin,
-        rangeMax: formData.rangeMax,
-        C0: formData.C0,
-        r: formData.r,
-        isOdd: isOdd
-    });
-        // Небольшая задержка для плавного перехода 
-        setTimeout(() => {
-            navigate('/calc', { 
-                state: { 
-                    inputData: { ...formData, isOdd },
-                    generatedData: previewData // Передаем сгенерированные данные
-                } 
-            });
-        }, 100);
-    };
+        if (!previewData.A.length || !previewData.C.length) {
+        console.log('⚠️ Данные еще не готовы, генерируем сейчас...');
+        // Генерируем только если данные пустые (первый раз или ошибка)
+        const freshData = generatePreviewData();
+        setPreviewData(freshData);
+        
+        // Используем свежие данные
+        const inputData = {
+            m: formData.m,
+            b: formData.b,
+            rangeMin: formData.rangeMin,
+            rangeMax: formData.rangeMax,
+            C0: formData.C0,
+            r: formData.r,
+            isOdd: isOdd
+        };
+        
+        updateData(inputData, {
+            A: freshData.A,
+            C: freshData.C
+        });
+    } else {
+        // Данные уже есть — используем их
+        const inputData = {
+            m: formData.m,
+            b: formData.b,
+            rangeMin: formData.rangeMin,
+            rangeMax: formData.rangeMax,
+            C0: formData.C0,
+            r: formData.r,
+            isOdd: isOdd
+        };
+        
+        updateData(inputData, {
+            A: previewData.A,
+            C: previewData.C
+        });
+    }
+    
+    setTimeout(() => {
+        navigate('/calc');
+    }, 100);
+};
     
 
 const generatePreviewData = useCallback(() => {
@@ -87,10 +112,10 @@ const generatePreviewData = useCallback(() => {
     return { A: previewA, C: previewC, size: m };
 }, [formData.m, formData.rangeMin, formData.rangeMax, isOdd, formData.C0, formData.r]);
 
-// Генерируем данные при монтировании и при изменении параметров
-useEffect(() => {
-    setPreviewData(generatePreviewData());
-}, [generatePreviewData]);
+        // Генерируем данные при монтировании и при изменении параметров
+        useEffect(() => {
+            setPreviewData(generatePreviewData());
+        }, [generatePreviewData]);
 
     
 

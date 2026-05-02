@@ -3,20 +3,16 @@ import { calculateAll } from '../core/calculations';
 
 const DataContext = createContext(null);
 
-
 export function DataProvider({ children }) {
     const [appData, setAppData] = useState({
         formData: null,
-        matrixA: null,
-        vectorC: null,
-        isOdd: null,
         results: null,
         isLoading: false,
         error: null,
-        lastUpdated: null
+        lastUpdated: null,
+        pregeneratedData: null
     });
 
-    // 1. Валидация (вынесена отдельно)
     const validateData = (data) => {
         const { m, b, rangeMin, rangeMax, isOdd, C0, r } = data;
         
@@ -31,41 +27,41 @@ export function DataProvider({ children }) {
         return true;
     };
 
-    // 2. Расчеты
-    const calculate = (inputData) => {
-        setAppData(prev => ({ ...prev, isLoading: true, error: null }));
+    const updateData = (newData, pregeneratedData) => {
+        console.log('🟡 updateData:', { newData, pregeneratedData });
         
         try {
-            const results = calculateAll(inputData);
-            setAppData(prev => ({
-                ...prev,
-                results,
-                isLoading: false,
-                lastUpdated: results.meta?.timestamp || new Date().toISOString()
-            }));
-        } catch (error) {
-            setAppData(prev => ({ ...prev, error: error.message, isLoading: false }));
-        }
-    };
-
-    // 3. Обновление данных из формы
-    const updateData = (newData) => {
-        try {
             validateData(newData);
-            // Если валидация прошла, сохраняем данные и запускаем расчет
-            setAppData(prev => ({
-                ...prev,
+            
+            // Проверка перед расчетом
+            if (!pregeneratedData?.A || !pregeneratedData?.C) {
+                throw new Error('pregeneratedData не содержит A или C');
+            }
+            
+            const results = calculateAll(newData, pregeneratedData);
+            console.log('🟢 Results:', results);
+            
+            setAppData({
                 formData: newData,
-                lastUpdated: new Date().toISOString()
-            }));
-            calculate(newData); 
+                pregeneratedData: pregeneratedData,
+                results: results,
+                isLoading: false,
+                error: null,
+                lastUpdated: results.meta?.timestamp || new Date().toISOString()
+            });
         } catch (error) {
-            setAppData(prev => ({ ...prev, error: error.message }));
+            console.log('🔴 Ошибка:', error.message);
+            setAppData(prev => ({ 
+                ...prev, 
+                error: error.message, 
+                isLoading: false,
+                results: null 
+            }));
         }
     };
 
     return (
-        <DataContext.Provider value={{ appData, updateData, calculate }}>
+        <DataContext.Provider value={{ appData, updateData }}>
             {children}
         </DataContext.Provider>
     );
