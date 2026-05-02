@@ -35,12 +35,15 @@ export default function InputNum() {
 });
      const handleCalculate = () => {
         setIsOn(false); // размонтируем текущий компонент
-        updateData({
-            formData: formData,
-            matrixA: previewData.A,
-            vectorC: previewData.C,
-            isOdd: isOdd
-        });
+         updateData({
+        m: formData.m,
+        b: formData.b,
+        rangeMin: formData.rangeMin,
+        rangeMax: formData.rangeMax,
+        C0: formData.C0,
+        r: formData.r,
+        isOdd: isOdd
+    });
         // Небольшая задержка для плавного перехода 
         setTimeout(() => {
             navigate('/calc', { 
@@ -106,9 +109,8 @@ useEffect(() => {
                 </div>
                     
             <div className="w-full mb-8">
-                <div className="bg-white rounded-2xl shadow-2xl p-8 border ">
+                <div className="bg-white rounded-2xl shadow-2xl p-8 border">
                     <h2 className="text-2xl font-bold text-black mb-6 flex items-center gap-2">
-                        
                         Параметры расчета
                     </h2>
                     
@@ -116,7 +118,7 @@ useEffect(() => {
                         {/* Размерность матрицы */}
                         <div className="group">
                             <label className="block text-gray-700 text-sm font-semibold mb-2 flex items-center gap-2">
-                                <span className="text-lg">📐</span>
+                                
                                 Размерность матрицы A (m)
                             </label>
                             <input
@@ -134,7 +136,6 @@ useEffect(() => {
                         {/* Переменная b */}
                         <div className="group">
                             <label className="block text-gray-700 text-sm font-semibold mb-2 flex items-center gap-2">
-                                <span className="text-lg">🔤</span>
                                 Переменная b
                             </label>
                             <input
@@ -151,7 +152,6 @@ useEffect(() => {
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-gray-700 text-sm font-semibold mb-2 flex items-center gap-2">
-                                    <span className="text-lg">📉</span>
                                     Мин граница
                                 </label>
                                 <input
@@ -165,7 +165,6 @@ useEffect(() => {
                             </div>
                             <div>
                                 <label className="block text-gray-700 text-sm font-semibold mb-2 flex items-center gap-2">
-                                    <span className="text-lg">📈</span>
                                     Макс граница
                                 </label>
                                 <input
@@ -191,7 +190,7 @@ useEffect(() => {
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                     }`}
                                 >
-                                    🟢 Нечетный (Фибоначчи)
+                                    Нечетный (Фибоначчи)
                                 </button>
                                 <button
                                     onClick={() => setIsOdd(false)}
@@ -201,7 +200,7 @@ useEffect(() => {
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                     }`}
                                 >
-                                    🔵 Четный (Прогрессия)
+                                    Четный (Прогрессия)
                                 </button>
                             </div>
                         </div>
@@ -243,7 +242,6 @@ useEffect(() => {
                             onClick={handleCalculate}
                             className="w-full bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl mt-6 flex items-center justify-center gap-2 group"
                         >
-                            <span className="text-2xl group-hover:rotate-12 transition-transform">🚀</span>
                             Рассчитать
                         </button>
                     </div>
@@ -254,7 +252,6 @@ useEffect(() => {
             <div className="w-full">
                 <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                        <span className="text-3xl">👁️</span>
                         Предпросмотр данных
                     </h2>
                     
@@ -285,7 +282,6 @@ useEffect(() => {
                                         {/* Массив C */}
                                         <div>
                                             <h3 className="text-gray-800 font-semibold mb-3 flex items-center gap-2">
-                                                <span>📊</span>
                                                 Массив C
                                             </h3>
                                             <div className="bg-gray-200 rounded-lg p-3 flex flex-wrap gap-2">
@@ -296,7 +292,7 @@ useEffect(() => {
                                                 ))}
                                             </div>
                                             <p className="text-gray-600 text-xs mt-2">
-                                                {isOdd ? '📈 Последовательность Фибоначчи' : '📊 Арифметическая прогрессия'}
+                                                {isOdd ? 'Последовательность Фибоначчи' : 'Арифметическая прогрессия'}
                                             </p>
                                         </div>
 

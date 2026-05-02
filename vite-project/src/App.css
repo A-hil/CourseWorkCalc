@@ -27,3 +27,7 @@ input:focus {
 .cursor-grab:active {
     cursor: grabbing;
 }
+
+h1 {
+    color: black;
+}
