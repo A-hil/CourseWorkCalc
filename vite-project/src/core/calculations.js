@@ -1,13 +1,4 @@
-// src/core/calculations.js
-// ============================================
-// ВАРИАНТ 28 - ЧЕТНЫЙ
-// ============================================
-/**
- * Вычисление суммы диагонали матрицы A
- * @param {number[][]} A - матрица
- * @param {boolean} isOdd - true = главная диагональ, false = побочная
- * @returns {number}
- */
+//Вычисление суммы диагонали матрицы A
 export const calculateS = (A, isOdd) => {
     const m = A.length;
     let sum = 0;
@@ -19,16 +10,7 @@ export const calculateS = (A, isOdd) => {
     return Number(sum.toFixed(4));
 };
 
-/**
- * ВЫЧИСЛЕНИЕ МАССИВА X ПО ФОРМУЛЕ ВАРИАНТА 28
- * Формула: Xi = (b + s) * C[i] + Σ (A[i][k] + C[k]) / (|A[i][k] - p| + 1)
- * 
- * @param {number[][]} A
- * @param {number[]} C
- * @param {number} b
- * @param {number} s
- * @returns {number[]}
- */
+// ВЫЧИСЛЕНИЕ МАССИВА X ПО ФОРМУЛЕ ВАРИАНТА 28
 export const calculateX = (A, C, b, s) => {
     const m = A.length;
     const X = new Array(m);
@@ -47,19 +29,12 @@ export const calculateX = (A, C, b, s) => {
 
     return X.map(v => Number(v.toFixed(6)));
 };
-
-/**
- * ИНТЕРПОЛЯЦИЯ КАНОНИЧЕСКИМ ПОЛИНОМОМ
- * @param {number[]} X - исходный массив
- * @returns {number[]} интерполированный массив Y
- */
+//ИНТЕРПОЛЯЦИЯ КАНОНИЧЕСКИМ ПОЛИНОМОМ
 export const interpolateCanonical = (X) => {
     const n = X.length;
     const step = 0.5;
     const pointsCount = (n - 1) * 2 + 1;
     const result = [];
-
-    // Находим коэффициенты канонического полинома
     const coefficients = findCanonicalCoefficients(X);
 
     // Вычисляем значения в точках x = 0, 0.5, 1, 1.5, ..., n-1
@@ -74,12 +49,6 @@ export const interpolateCanonical = (X) => {
 
     return result;
 };
-
-/**
- * Нахождение коэффициентов канонического полинома (решение системы V * a = X)
- * @param {number[]} X
- * @returns {number[]}
- */
 const findCanonicalCoefficients = (X) => {
     const n = X.length;
     // Строим матрицу Вандермонда V[i][j] = i^j
@@ -88,13 +57,6 @@ const findCanonicalCoefficients = (X) => {
     );
     return solveGauss(V, X);
 };
-
-/**
- * Решение системы линейных уравнений методом Гаусса
- * @param {number[][]} A - матрица коэффициентов
- * @param {number[]} B - вектор правой части
- * @returns {number[]}
- */
 const solveGauss = (A, B) => {
     const n = A.length;
     const augmented = A.map((row, i) => [...row, B[i]]);
@@ -130,12 +92,7 @@ const solveGauss = (A, B) => {
 
     return augmented.map(row => row[n]);
 };
-
-/**
- * СОРТИРОВКА ШЕЛЛА (по возрастанию)
- * @param {number[]} arr
- * @returns {number[]}
- */
+// СОРТИРОВКА ШЕЛЛА (по возрастанию)
 export const shellSort = (arr) => {
     const result = [...arr];
     const n = result.length;
@@ -155,25 +112,10 @@ export const shellSort = (arr) => {
     }
     return result;
 };
-
-// ============================================
 // ГЛАВНАЯ ФУНКЦИЯ - ВЫЗОВ ИЗ DataContext
-// ============================================
-
-/**
- * Выполняет полный цикл расчетов на основе входных параметров.
- * @param {Object} params - Входные данные с формы.
- * @param {number} params.m - Размерность матрицы.
- * @param {number} params.b - Переменная b.
- * @param {number} params.rangeMin - Минимальная граница для A.
- * @param {number} params.rangeMax - Максимальная граница для A.
- * @param {number} params.C0 - Первый член прогрессии.
- * @param {number} params.r - Разность прогрессии.
- * @param {boolean} params.isOdd - Тип варианта (для 28 false).
- * @returns {Object} Результаты всех вычислений.
- */
 export const calculateAll = (inputData, pregeneratedData) => {
     const { m, b, rangeMin, rangeMax, C0, r, isOdd } = inputData;
+    
     const A = pregeneratedData.A;
     const C = pregeneratedData.C;
     

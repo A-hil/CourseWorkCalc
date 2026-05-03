@@ -5,6 +5,7 @@ import 'tailwindcss';
 export default function ResultsBlock() {
     const navigate = useNavigate();
     const { appData } = useAppData();
+    const { enableSorting } = appData;
 
     console.log('📊 ResultsBlock appData:', appData); 
 
@@ -46,7 +47,7 @@ export default function ResultsBlock() {
                         
                         {/* ✅ ИСПОЛЬЗУЕМ matrixA из generatedData */}
                         <div className="bg-gray-100 p-4 rounded mb-6">
-                            <h2 className="font-bold text-lg mb-2">📊 Исходная матрица A (из предпросмотра)</h2>
+                            <h2 className="font-bold text-lg mb-2">Исходная матрица A (из предпросмотра)</h2>
                             <div className="overflow-x-auto">
                                 <table className="min-w-full border">
                                     <tbody>
@@ -66,7 +67,7 @@ export default function ResultsBlock() {
 
                         {/* ✅ ИСПОЛЬЗУЕМ vectorC из generatedData */}
                         <div className="bg-gray-100 p-4 rounded mb-6">
-                            <h2 className="font-bold text-lg mb-2">📊 Исходный массив C (из предпросмотра)</h2>
+                            <h2 className="font-bold text-lg mb-2">Исходный массив C (из предпросмотра)</h2>
                             <div className="flex gap-2 flex-wrap">
                                 {vectorC?.map((val, i) => (
                                     <span key={i} className="bg-blue-200 px-3 py-1 rounded">
@@ -78,7 +79,7 @@ export default function ResultsBlock() {
 
                         {/* Параметры расчета */}
                         <div className="bg-gray-100 p-4 rounded mb-6">
-                            <h2 className="font-bold text-lg mb-2">⚙️ Параметры расчета</h2>
+                            <h2 className="font-bold text-lg mb-2">Параметры расчета</h2>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                                 <div>m = {input?.m}</div>
                                 <div>b = {input?.b}</div>
@@ -92,7 +93,7 @@ export default function ResultsBlock() {
 
                         {/* Массив X */}
                         <div className="bg-gray-100 p-4 rounded mb-6">
-                            <h2 className="font-bold text-lg mb-2">✨ Массив X (результат формулы)</h2>
+                            <h2 className="font-bold text-lg mb-2">Массив X (результат формулы)</h2>
                             <div className="flex gap-2 flex-wrap">
                                 {final?.X?.map((val, i) => (
                                     <span key={i} className="bg-green-200 px-2 py-1 rounded">
@@ -104,7 +105,9 @@ export default function ResultsBlock() {
 
                         {/* Массив Y (отсортированный) */}
                         <div className="bg-gray-100 p-4 rounded mb-6">
-                            <h2 className="font-bold text-lg mb-2">🔄 Массив Y (сортировка Шелла ↑)</h2>
+                            <h2 className="font-bold text-lg mb-2">
+        {enableSorting ? '🔄 Массив Y (сортировка Шелла по возрастанию)' : '📊 Массив Y (исходный, без сортировки)'}
+    </h2>
                             <div className="flex gap-2 flex-wrap">
                                 {final?.Ysorted?.map((val, i) => (
                                     <span key={i} className="bg-blue-200 px-2 py-1 rounded">

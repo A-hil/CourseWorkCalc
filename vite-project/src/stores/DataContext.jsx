@@ -10,8 +10,15 @@ export function DataProvider({ children }) {
         isLoading: false,
         error: null,
         lastUpdated: null,
-        pregeneratedData: null
+        pregeneratedData: null,
+        enableSorting: true
     });
+
+
+    //Опциональность выбора сортировкой шелла 
+    const toggleSorting = () => {
+    setAppData(prev => ({ ...prev, enableSorting: !prev.enableSorting }));
+};
 
     const validateData = (data) => {
         const { m, b, rangeMin, rangeMax, isOdd, C0, r } = data;
@@ -38,30 +45,31 @@ export function DataProvider({ children }) {
                 throw new Error('pregeneratedData не содержит A или C');
             }
             
-            const results = calculateAll(newData, pregeneratedData);
+            const results = calculateAll(newData, pregeneratedData, appData.enableSorting);
             console.log('🟢 Results:', results);
             
-            setAppData({
-                formData: newData,
-                pregeneratedData: pregeneratedData,
-                results: results,
-                isLoading: false,
-                error: null,
-                lastUpdated: results.meta?.timestamp || new Date().toISOString()
-            });
-        } catch (error) {
-            console.log('🔴 Ошибка:', error.message);
-            setAppData(prev => ({ 
-                ...prev, 
-                error: error.message, 
-                isLoading: false,
-                results: null 
-            }));
-        }
-    };
+            setAppData(prev => ({  // ← используем prev, чтобы не потерять enableSorting
+            ...prev,
+            formData: newData,
+            pregeneratedData: pregeneratedData,
+            results: results,
+            isLoading: false,
+            error: null,
+            lastUpdated: results.meta?.timestamp || new Date().toISOString()
+        }));
+    } catch (error) {
+        console.log('🔴 Ошибка:', error.message);
+        setAppData(prev => ({ 
+            ...prev, 
+            error: error.message, 
+            isLoading: false,
+            results: null 
+        }));
+    }
+};
 
     return (
-        <DataContext.Provider value={{ appData, updateData }}>
+        <DataContext.Provider value={{ appData, updateData, toggleSorting }}>
             {children}
         </DataContext.Provider>
     );

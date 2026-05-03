@@ -5,11 +5,12 @@ import { useAppData } from './stores/DataContext';
 
 
 export default function InputNum() {
-    const { updateData } = useAppData(); //Сохран данные
     const navigate = useNavigate();
     const [previewData, setPreviewData] = useState({ A: [], C: [], size: 3 });
     const [isOn, setIsOn] = useState(true); // Состояние для монтирования/размонтирования
     const [isOdd, setIsOdd] = useState(true); //четность или не четность
+    const { updateData, toggleSorting, appData } = useAppData();
+    const { enableSorting } = appData;
     const [formData, setFormData] = useState({
         m: 3,
         b: 0,
@@ -141,8 +142,9 @@ const generatePreviewData = useCallback(() => {
                     
                     <div className="space-y-5">
                         {/* Размерность матрицы */}
+                        <div className='grid grid-cols-2 gap-5'>
                         <div className="group">
-                            <label className="block text-gray-700 text-sm font-semibold mb-2 flex items-center gap-2">
+                            <label className="block text-gray-700 text-sm font-semibold mb-2 flex items-center gap-2 ">
                                 
                                 Размерность матрицы A (m)
                             </label>
@@ -169,14 +171,21 @@ const generatePreviewData = useCallback(() => {
                                 value={formData.b}
                                 onChange={handleChange}
                                 step="0.1"
-                                className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                                className="w-full bg-gray-50 border
+                              border-gray-300 rounded-xl px-4
+                                py-3 text-gray-900 focus:outline-none
+                                focus:ring-2 focus:ring-purple-500 
+                                transition-all duration-300"
                             />
+                        </div>
                         </div>
 
                         {/* Диапазон генерации матрицы A */}
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-gray-700 text-sm font-semibold mb-2 flex items-center gap-2">
+                                <label className="block text-gray-700
+                                 text-sm font-semibold mb-2 flex
+                                  items-center gap-2">
                                     Мин граница
                                 </label>
                                 <input
@@ -185,11 +194,17 @@ const generatePreviewData = useCallback(() => {
                                     value={formData.rangeMin}
                                     onChange={handleChange}
                                     step="0.5"
-                                    className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                                    className="w-full bg-gray-50 border
+                                  border-gray-300 rounded-xl px-4 py-3
+                                  text-gray-900 focus:outline-none
+                                    focus:ring-2 focus:ring-purple-500
+                                    transition-all duration-300"
                                 />
                             </div>
                             <div>
-                                <label className="block text-gray-700 text-sm font-semibold mb-2 flex items-center gap-2">
+                                <label className="block text-gray-700
+                                text-sm font-semibold mb-2 flex items-center
+                                gap-2">
                                     Макс граница
                                 </label>
                                 <input
@@ -198,18 +213,45 @@ const generatePreviewData = useCallback(() => {
                                     value={formData.rangeMax}
                                     onChange={handleChange}
                                     step="0.5"
-                                    className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                                    className="w-full bg-gray-50 border
+                                    border-gray-300 rounded-xl px-4 py-3
+                                    text-gray-900 focus:outline-none
+                                    focus:ring-2 focus:ring-purple-500
+                                    transition-all duration-300"
                                 />
                             </div>
                         </div>
 
+                        <div className="bg-gray-50 rounded-xl p-4 border border-gray-200 mb-4">
+                            <label className="flex items-center justify-between cursor-pointer">
+                                <span className="text-gray-700 font-semibold">Сортировка Шелла</span>
+                                <input
+                                    type="checkbox"
+                                    checked={enableSorting}
+                                    onChange={toggleSorting}
+                                    className="w-5 h-5 text-purple-600"
+                                />
+                            </label>
+                            <p className="text-gray-500 text-xs mt-1 left-0 flex">
+                                {enableSorting ? 'Массив Y будет отсортирован' : 'Массив Y останется в исходном порядке'}
+                            </p>
+                        </div>
+
                         {/* Тип варианта (переключатель) */}
-                        <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                            <label className="block text-gray-700 text-sm font-semibold mb-3">Тип варианта</label>
+                        <div className="bg-gray-50 rounded-xlp-4
+                        border border-gray-200">
+                            <label className="block text-gray-700
+                            text-sm font-semibold mb-3">
+                            Тип варианта
+                            </label>
                             <div className="flex gap-4">
                                 <button
-                                    onClick={() => setIsOdd(true)}
-                                    className={`flex-1 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
+                                    onClick={() =>
+                                    setIsOdd(true)}
+                                    className={`flex-1 py-2
+                                        rounded-lg font-semibold
+                                        transition-all duration-300
+                                        transform hover:scale-105 ${
                                         isOdd 
                                             ? 'bg-linear-to-r from-purple-500 to-pink-500 text-white shadow-lg' 
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -219,7 +261,11 @@ const generatePreviewData = useCallback(() => {
                                 </button>
                                 <button
                                     onClick={() => setIsOdd(false)}
-                                    className={`flex-1 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
+                                    className=
+                                    {`flex-1 py-2 rounded-lg
+                                    font-semibold transition-all
+                                    duration-300 transform
+                                    hover:scale-105 ${
                                         !isOdd 
                                             ? 'bg-linear-to-r from-purple-500 to-pink-500 text-white shadow-lg' 
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -231,10 +277,16 @@ const generatePreviewData = useCallback(() => {
                         </div>
 
                         {/* Дополнительные поля для четного варианта */}
-                        <div className={`overflow-hidden transition-all duration-500 ${!isOdd ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
+                        <div className={`overflow-hidden
+                            transition-all duration-500
+                            ${!isOdd ? 'max-h-48 opacity-100'
+                            :
+                            'max-h-0 opacity-0'}`}>
                             <div className="space-y-4 pt-2">
                                 <div>
-                                    <label className="block text-gray-700 text-sm font-semibold mb-2">
+                                    <label className="block
+                                    text-gray-700 text-sm
+                                    font-semibold mb-2">
                                         C[0] (первый член прогрессии)
                                     </label>
                                     <input
@@ -243,11 +295,17 @@ const generatePreviewData = useCallback(() => {
                                         value={formData.C0}
                                         onChange={handleChange}
                                         step="0.5"
-                                        className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                                        className="w-full
+                                        bg-gray-50 border
+                                        border-gray-300 rounded-xl
+                                        px-4 py-3 text-gray-900
+                                        focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-gray-700 text-sm font-semibold mb-2">
+                                    <label className="block
+                                    text-gray-700 text-sm
+                                    font-semibold mb-2">
                                         r (разность прогрессии)
                                     </label>
                                     <input
@@ -256,11 +314,76 @@ const generatePreviewData = useCallback(() => {
                                         value={formData.r}
                                         onChange={handleChange}
                                         step="0.5"
-                                        className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                                        className="w-full
+                                        bg-gray-50 border
+                                        border-gray-300 rounded-xl
+                                        px-4 py-3 text-gray-900
+                                        focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
                                     />
                                 </div>
                             </div>
                         </div>
+
+                    <div className="w-full">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                        Предпросмотр данных
+                    </h2>
+                    
+                    <div className="flex gap-4">
+                        <div className="flex-1">
+                            <div className="bg-gray-100 rounded-xl overflow-hidden border border-gray-300">
+                                    <div className="p-4 space-y-6">
+                                        {/* Матрица A */}
+                                        <div className="flex flex-row flex-wrap justify-start items-start gap-6">
+
+    {/* Блок Матрицы: w-fit заставляет блок сжаться под размер таблицы */}
+    <div className="w-fit flex flex-col items-center">
+        <h3 className="text-gray-800 font-semibold mb-3">
+            Матрица A ({previewData.size}×{previewData.size})
+        </h3>
+        
+        <div className="inline-block border border-transparent"> 
+            {previewData.A.map((row, i) => (
+                <div key={i} className="flex gap-2 my-1">
+                    {row.map((val, j) => (
+                        <span key={j} className="bg-purple-200 w-14 text-center py-1 rounded text-purple-900 font-mono text-sm">
+                            {val}
+                        </span>
+                    ))}
+                    
+                </div>
+            ))}
+
+            <p>m={formData.m}</p>
+        </div>
+    </div>
+
+    {/* Блок Массива C: flex-1 или w-fit позволит ему не занимать лишнего места */}
+    <div className="w-fit flex flex-col items-center">
+        <h3 className="text-gray-800 font-semibold mb-3">
+            Массив C
+        </h3>
+        <div className="flex flex-wrap justify-center gap-2">
+            {previewData.C.map((val, i) => (
+                <span key={i} className="bg-blue-200 px-3 py-1 rounded text-blue-900 font-mono text-sm whitespace-nowrap">
+                    C[{i}]={val}
+                </span>
+            ))}
+        </div>
+        <p className="text-gray-500 text-[10px] mt-2 italic">
+            {isOdd ? 'Последовательность Фибоначчи' : 'Арифметическая прогрессия'}
+        </p>
+    </div>
+
+</div>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
 
                         {/* Кнопка расчета */}
                         <button
@@ -269,67 +392,12 @@ const generatePreviewData = useCallback(() => {
                         >
                             Рассчитать
                         </button>
+
+                        
                     </div>
                 </div>
             </div>
 
-            {/* НИЖНЯЯ КОЛОНКА - ПРЕДПРОСМОТР (на всю ширину) */}
-            <div className="w-full">
-                <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                        Предпросмотр данных
-                    </h2>
-                    
-                    <div className="flex gap-4">
-                        {/* VIEWPORT - область просмотра */}
-                        <div className="flex-1">
-                            <div className="bg-gray-100 rounded-xl overflow-hidden border border-gray-300">
-                                    <div className="p-4 space-y-6">
-                                        {/* Матрица A */}
-                                        <div>
-                                            <h3 className="text-gray-800 font-semibold mb-3 flex items-center gap-2">
-                                                <span>🔲</span>
-                                                Матрица A ({previewData.size}×{previewData.size})
-                                            </h3>
-                                            <div className="bg-gray-200 rounded-lg p-3">
-                                                {previewData.A.map((row, i) => (
-                                                    <div key={i} className="flex justify-center gap-2 my-1">
-                                                        {row.map((val, j) => (
-                                                            <span key={j} className="bg-purple-200 px-3 py-1 rounded text-purple-900 font-mono text-sm">
-                                                                {val}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-
-                                        {/* Массив C */}
-                                        <div>
-                                            <h3 className="text-gray-800 font-semibold mb-3 flex items-center gap-2">
-                                                Массив C
-                                            </h3>
-                                            <div className="bg-gray-200 rounded-lg p-3 flex flex-wrap gap-2">
-                                                {previewData.C.map((val, i) => (
-                                                    <span key={i} className="bg-blue-200 px-3 py-1 rounded text-blue-900 font-mono text-sm">
-                                                        C[{i}] = {val}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                            <p className="text-gray-600 text-xs mt-2">
-                                                {isOdd ? 'Последовательность Фибоначчи' : 'Арифметическая прогрессия'}
-                                            </p>
-                                        </div>
-
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                </div>
             </div>
         </div>  
     ): null;
