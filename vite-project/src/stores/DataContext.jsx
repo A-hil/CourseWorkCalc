@@ -14,6 +14,7 @@ export function DataProvider({ children }) {
         enableSorting: true
     });
 
+    
 
     //Опциональность выбора сортировкой шелла 
     const toggleSorting = () => {
@@ -48,15 +49,22 @@ export function DataProvider({ children }) {
             const results = calculateAll(newData, pregeneratedData, appData.enableSorting);
             console.log('🟢 Results:', results);
             
-            setAppData(prev => ({  // ← используем prev, чтобы не потерять enableSorting
-            ...prev,
-            formData: newData,
-            pregeneratedData: pregeneratedData,
-            results: results,
-            isLoading: false,
-            error: null,
-            lastUpdated: results.meta?.timestamp || new Date().toISOString()
-        }));
+            setAppData(prev => {
+            console.log('📌 Текущий enableSorting в момент расчёта:', prev.enableSorting);
+            
+            const results = calculateAll(newData, pregeneratedData, prev.enableSorting);
+            console.log('🟢 Results:', results);
+            
+            return {
+                ...prev,
+                formData: newData,
+                pregeneratedData: pregeneratedData,
+                results: results,
+                isLoading: false,
+                error: null,
+                lastUpdated: results.meta?.timestamp || new Date().toISOString()
+            };
+        });
     } catch (error) {
         console.log('🔴 Ошибка:', error.message);
         setAppData(prev => ({ 
@@ -82,3 +90,4 @@ export function useAppData() {
     }
     return context;
 }
+

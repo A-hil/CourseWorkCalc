@@ -113,7 +113,7 @@ export const shellSort = (arr) => {
     return result;
 };
 // ГЛАВНАЯ ФУНКЦИЯ - ВЫЗОВ ИЗ DataContext
-export const calculateAll = (inputData, pregeneratedData) => {
+export const calculateAll = (inputData, pregeneratedData, enableSorting = true) => {
     const { m, b, rangeMin, rangeMax, C0, r, isOdd } = inputData;
     
     const A = pregeneratedData.A;
@@ -122,7 +122,7 @@ export const calculateAll = (inputData, pregeneratedData) => {
     const s = calculateS(A, isOdd);
     const X = calculateX(A, C, b, s);
     const Y = interpolateCanonical(X);
-    const Ysorted = shellSort(Y);
+    const Ysorted = enableSorting ? shellSort(Y) : [...Y];
     
     if (!pregeneratedData?.A || !pregeneratedData?.C) {
         throw new Error('pregeneratedData не содержит A или C');
@@ -132,6 +132,6 @@ export const calculateAll = (inputData, pregeneratedData) => {
         input: { m, b, rangeMin, rangeMax, C0, r, isOdd },
         intermediate: { A, C, s },
         final: { X, Y, Ysorted },
-        meta: { timestamp: new Date().toISOString(), variant: 28, type: 'even' }
+        meta: { timestamp: new Date().toISOString(), variant: 28, type: 'even',sortingEnabled: enableSorting  }
     };
 };

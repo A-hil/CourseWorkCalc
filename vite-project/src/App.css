@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://googleapis.com');
 
 /* Дополнительные анимации для плавности */
 @keyframes pulse-glow {
@@ -28,6 +29,94 @@ input:focus {
     cursor: grabbing;
 }
 
-h1,h2 {
-    color: black;
+:root {
+  /* Основная палитра */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --primary: #0f172a;       /* Глубокий синий (для кнопок) */
+  --accent: #3b82f6;        /* Голубой акцент */
+  
+  /* Цвета текста */
+  --text-main: #1e293b;
+  --text-muted: #64748b;    /* Для подписей и заголовков */
+  --text-light: #94a3b8;
+  
+  /* Границы и тени */
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Стили для заголовков в верхнем регистре (как на фото) */
+.label-caps {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+/* Моноширинный шрифт для матриц и таблиц */
+.font-mono {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Кастомный скроллбар в стиле интерфейса */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Общие стили для карточек */
+.card-glass {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease;
+}
+
+.card-glass:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-glass {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(0px);
+    border-radius: 20px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.label-caps {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    background: #f8fafc;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
 }
