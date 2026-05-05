@@ -122,15 +122,17 @@ export default function InputNum() {
     
 
 const generatePreviewData = useCallback(() => {
-    const m = Math.min(formData.m, 8);
-    
+
+    const m = Math.min(Number(formData.m) || 2, 8);
+    const rMin = Number(formData.rangeMin) || 0;
+    const rMax = Number(formData.rangeMax) || 0;
+
     // Генерация матрицы A
     const previewA = [];
     for (let i = 0; i < m; i++) {
         previewA[i] = [];
         for (let j = 0; j < m; j++) {
-            const randomValue = formData.rangeMin + 
-                Math.random() * (formData.rangeMax - formData.rangeMin);
+            const randomValue = rMin + Math.random() * (rMax - rMin);
             previewA[i][j] = parseFloat(randomValue.toFixed(2));
         }
     }
