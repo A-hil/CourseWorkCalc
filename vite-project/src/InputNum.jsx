@@ -94,15 +94,19 @@ export default function InputNum() {
 
         const freshData = generatePreviewData();
         setPreviewData(freshData);
-        
 
     updateData(inputData, { A: dataA, C: dataC });
 
-    // 3. Переход 
-    toast.success('Расчет запущен...');
+if(inputData.b === 0){
+            toast.error('Введите значение переменной b');
+        }else{
+                toast.success('Расчет запущен...');
     setTimeout(() => {
         navigate('/calc');
     }, 500); 
+        }
+    // 3. Переход 
+
 };
     
 

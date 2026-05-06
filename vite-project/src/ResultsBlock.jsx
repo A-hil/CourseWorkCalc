@@ -2,6 +2,8 @@
 import YChart from './components/YChart';
 import { useAppData } from './stores/DataContext';
 import { useNavigate } from 'react-router-dom';
+import { exportToExcel } from './core/ExcelExport.js'; 
+import { exportToTxt } from './core/txtExport';  
 import 'tailwindcss';
 
 export default function ResultsBlock() {
@@ -16,7 +18,7 @@ export default function ResultsBlock() {
      const { Y, Ysorted } = final; 
 
         const report = {
-        parameters: input,
+        parameters: input|| formData || {},
         results: final,
         generatedAt: new Date().toISOString(),
     };
@@ -80,6 +82,7 @@ export default function ResultsBlock() {
                 <div className="flex items-center gap-2">
                     <h2 className="text-sm font-bold text-gray-700 uppercase tracking-tight">Результаты расчетов</h2>
                 </div>
+                
                 <span className="bg-green-50 text-green-600 text-[10px] font-bold px-2 py-1 rounded border border-green-100 uppercase tracking-wider">
                     Рассчитано
                 </span>
@@ -92,6 +95,7 @@ export default function ResultsBlock() {
                     <span className="text-[10px] text-gray-300">n={final?.X?.length}</span>
                 </div>
                 <div className="border border-gray-100 rounded-xl overflow-hidden shadow-sm">
+                    
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-gray-50/50 border-b border-gray-100 text-[10px] uppercase text-gray-400">
@@ -137,7 +141,40 @@ export default function ResultsBlock() {
                     </table>
                 </div>
             </div>
-            
+            <div className="flex w-full justify-end items-center gap-3 mt-6 pt-4">
+  {/* Неброская подпись для контекста */}
+
+  <div className="flex gap-2">
+    {/* Кнопка Excel */}
+    <button
+      onClick={() => exportToExcel(report)}
+      className="group flex items-center gap-2 px-3 py-1.5 rounded-md border border-gray-200 
+                 bg-white text-[11px] font-bold text-gray-500 transition-all duration-200
+                 hover:border-emerald-500 hover:text-emerald-600 hover:shadow-sm active:scale-95"
+    >
+      <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-emerald-500 transition-colors" 
+           viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/>
+      </svg>
+      EXCEL
+    </button>
+
+    {/* Кнопка TXT */}
+    <button
+      onClick={() => exportToTxt(report)}
+      className="group flex items-center gap-2 px-3 py-1.5 rounded-md border border-gray-200 
+                 bg-white text-[11px] font-bold text-gray-500 transition-all duration-200
+                 hover:border-blue-500 hover:text-blue-600 hover:shadow-sm active:scale-95"
+    >
+      <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-500 transition-colors" 
+           viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      TXT
+    </button>
+  </div>
+</div>
+
         </div>
         
      <div className='mx-auto max-w-7xl pt-8 pb-8'>
