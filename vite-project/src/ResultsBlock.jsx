@@ -7,7 +7,7 @@ import 'tailwindcss';
 export default function ResultsBlock() {
     const navigate = useNavigate();
     const { appData, toggleSorting } = useAppData();
-    const { enableSorting, formData, results, isLoading } = appData;
+    const { enableSorting, formData, results, isLoading} = appData;
 
     if (isLoading) return <div className="p-8 text-center text-gray-500">Загрузка...</div>;
     if (!results || !results.final) return null;
@@ -18,10 +18,10 @@ export default function ResultsBlock() {
         const report = {
         parameters: input,
         results: final,
-        generatedAt: new Date().toISOString()
+        generatedAt: new Date().toISOString(),
     };
 
-    
+
     // Если данных нет, показать сообщение
     if (!formData) {
         return (
@@ -36,44 +36,7 @@ export default function ResultsBlock() {
 
     
     return (
-        <div className="min-h-screen bg-blue-50 p-8">
-            <div className="card-glass p-6">
-            {/* ШАПКА БЛОКА */}
-            <div className="flex justify-between items-center mb-8">
-                <div className="flex items-center gap-2">
-                    <h2 className="text-sm font-bold text-gray-700 uppercase tracking-tight">Результаты расчетов</h2>
-                </div>
-                <span className="bg-green-50 text-green-600 text-[10px] font-bold px-2 py-1 rounded border border-green-100 uppercase tracking-wider">
-                    Рассчитано
-                </span>
-            </div>
-
-            {/* ИСХОДНЫЙ МАССИВ X */}
-            <div className="mb-6">
-                <div className="flex justify-between mb-3">
-                    <span className="label-caps">Исходный массив X</span>
-                    <span className="text-[10px] text-gray-300">n={final?.X?.length}</span>
-                </div>
-                <div className="border border-gray-100 rounded-xl overflow-hidden shadow-sm">
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="bg-gray-50/50 border-b border-gray-100 text-[10px] uppercase text-gray-400">
-                                <th className="px-6 py-2 font-bold w-16">#</th>
-                                <th className="px-6 py-2 font-bold">Значение</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-50 bg-white">
-                            {final?.X?.map((val, i) => (
-                                <tr key={i} className="hover:bg-blue-50/20 transition-colors">
-                                    <td className="px-6 py-3 text-gray-400 font-mono text-xs">{i}</td>
-                                    <td className="px-6 py-3 text-gray-700 font-mono text-sm tracking-tight">{val.toFixed(5)}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
+        <div className="min-h-screen bg-blue-50 px-8">
             <div className="flex items-center justify-center gap-4 py-4">
     <div className={`flex items-center gap-3 border rounded-full px-4 py-1.5 transition-all duration-300 ${
         enableSorting ? 'bg-white border-gray-100 shadow-sm' : 'bg-gray-50 border-dashed border-gray-300 opacity-70'
@@ -111,7 +74,44 @@ export default function ResultsBlock() {
         </button>
     </div>
 </div>
+            <div className="card-glass p-6">
+            {/* ШАПКА БЛОКА */}
+            <div className="flex justify-between items-center mb-8">
+                <div className="flex items-center gap-2">
+                    <h2 className="text-sm font-bold text-gray-700 uppercase tracking-tight">Результаты расчетов</h2>
+                </div>
+                <span className="bg-green-50 text-green-600 text-[10px] font-bold px-2 py-1 rounded border border-green-100 uppercase tracking-wider">
+                    Рассчитано
+                </span>
+            </div>
 
+            {/* ИСХОДНЫЙ МАССИВ X */}
+            <div className="mb-6">
+                <div className="flex justify-between mb-3">
+                    <span className="label-caps">Исходный массив X</span>
+                    <span className="text-[10px] text-gray-300">n={final?.X?.length}</span>
+                </div>
+                <div className="border border-gray-100 rounded-xl overflow-hidden shadow-sm">
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="bg-gray-50/50 border-b border-gray-100 text-[10px] uppercase text-gray-400">
+                                <th className="px-6 py-2 font-bold w-16">#</th>
+                                <th className="px-6 py-2 font-bold">Значение</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-50 bg-white">
+                            {final?.X?.map((val, i) => (
+                                <tr key={i} className="hover:bg-blue-50/20 transition-colors">
+                                    <td className="px-6 py-3 text-gray-400 font-mono text-xs">{i}</td>
+                                    <td className="px-6 py-3 text-gray-700 font-mono text-sm tracking-tight">{val.toFixed(5)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {/*Здесь был функциональный переключатель сортировки */}
 
             {/* ОТСОРТИРОВАННЫЙ МАССИВ Y */}
             <div>
@@ -123,13 +123,13 @@ export default function ResultsBlock() {
                         <thead>
                             <tr className="bg-gray-50/50 border-b border-gray-100 text-[10px] uppercase text-gray-400">
                                 <th className="px-6 py-2 font-bold w-16">#</th>
-                                <th className="px-6 py-2 font-bold">Значение</th>
+                                <th className='px-6 py-2 font-bold '>Значение</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50 bg-white">
                             {final?.Ysorted?.map((val, i) => (
                                 <tr key={i} className="hover:bg-green-50/20 transition-colors">
-                                    <td className="px-6 py-3 text-gray-400 font-mono text-xs">{i}</td>
+                                    <td className="px-6 py-3 text-gray-700 font-mono text-sm tracking-tight">{i}</td> 
                                     <td className="px-6 py-3 text-gray-700 font-mono text-sm tracking-tight">{val.toFixed(5)}</td>
                                 </tr>
                             ))}
@@ -140,14 +140,14 @@ export default function ResultsBlock() {
             
         </div>
         
-        
-<div className="card-glass p-6 mt-6">
-    <YChart 
+     <div className='mx-auto max-w-7xl pt-8 pb-8'>
+        <YChart 
         yOriginal={Y}   
         ySorted={Ysorted}  
-
+        
     />
-        </div>
+    </div>   
+
         </div>
     );
 }

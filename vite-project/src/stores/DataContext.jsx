@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { calculateAll } from '../core/calculations';
+import { calculateAll} from '../core/calculations';
 
 const DataContext = createContext(null);
 
@@ -11,15 +11,38 @@ export function DataProvider({ children }) {
         error: null,
         lastUpdated: null,
         pregeneratedData: null,
-        enableSorting: true
-    });
-
-    
+        enableSorting: true,
+        calculatedSteps: []
+    });  
 
     //Опциональность выбора сортировкой шелла 
-    const toggleSorting = () => {
-    setAppData(prev => ({ ...prev, enableSorting: !prev.enableSorting }));
-};
+       const toggleSorting = () => {
+        setAppData(prev => {
+            const newEnableSorting = !prev.enableSorting;
+            
+            // Если есть существующие данные, пересчитываем с новым состоянием сортировки
+            if (prev.formData && prev.pregeneratedData) {
+                const newResults = calculateAll(
+                    prev.formData, 
+                    prev.pregeneratedData, 
+                    newEnableSorting  // Передаем новое состояние сортировки
+                );
+                
+                return {
+                    ...prev,
+                    enableSorting: newEnableSorting,
+                    results: newResults,
+                    lastUpdated: new Date().toISOString()
+                };
+            }
+            
+            // Просто переключаем без пересчета, если данных нет
+            return {
+                ...prev,
+                enableSorting: newEnableSorting
+            };
+        });
+    };
 
     const validateData = (data) => {
         const { m, b, rangeMin, rangeMax, isOdd, C0, r } = data;
@@ -34,10 +57,9 @@ export function DataProvider({ children }) {
         }
         return true;
     };
+    
 
-    const updateData = (newData, pregeneratedData) => {
-        console.log('🟡 updateData:', { newData, pregeneratedData });
-        
+    const updateData = (newData, pregeneratedData) => {      
         try {
             validateData(newData);
             
@@ -46,16 +68,10 @@ export function DataProvider({ children }) {
                 throw new Error('pregeneratedData не содержит A или C');
             }
             
-            const results = calculateAll(newData, pregeneratedData, appData.enableSorting);
-            console.log('🟢 Results:', results);
-            
             setAppData(prev => {
-            console.log('📌 Текущий enableSorting в момент расчёта:', prev.enableSorting);
-            
-            const results = calculateAll(newData, pregeneratedData, prev.enableSorting);
-            console.log('🟢 Results:', results);
-            
+                const results = calculateAll(newData, pregeneratedData, prev.enableSorting);
             return {
+                
                 ...prev,
                 formData: newData,
                 pregeneratedData: pregeneratedData,
@@ -71,7 +87,8 @@ export function DataProvider({ children }) {
             ...prev, 
             error: error.message, 
             isLoading: false,
-            results: null 
+            results: null,
+            calculatedSteps: []
         }));
     }
 };

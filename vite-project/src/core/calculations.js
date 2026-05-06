@@ -30,10 +30,9 @@ export const calculateX = (A, C, b, s) => {
     return X.map(v => Number(v.toFixed(6)));
 };
 //ИНТЕРПОЛЯЦИЯ КАНОНИЧЕСКИМ ПОЛИНОМОМ
-export const interpolateCanonical = (X) => {
+export const interpolateCanonical = (X, step = 0.5) => {
     const n = X.length;
-    const step = 0.5;
-    const pointsCount = (n - 1) * 2 + 1;
+    const pointsCount = Math.floor((n - 1) / step) + 1;
     const result = [];
     const coefficients = findCanonicalCoefficients(X);
 
@@ -114,14 +113,14 @@ export const shellSort = (arr) => {
 };
 // ГЛАВНАЯ ФУНКЦИЯ - ВЫЗОВ ИЗ DataContext
 export const calculateAll = (inputData, pregeneratedData, enableSorting = true) => {
-    const { m, b, rangeMin, rangeMax, C0, r, isOdd } = inputData;
+    const { m, b, rangeMin, rangeMax, C0, r, isOdd, g = 0.5 } = inputData;
     
     const A = pregeneratedData.A;
     const C = pregeneratedData.C;
     
     const s = calculateS(A, isOdd);
     const X = calculateX(A, C, b, s);
-    const Y = interpolateCanonical(X);
+    const Y = interpolateCanonical(X, g);
     const Ysorted = enableSorting ? shellSort(Y) : [...Y];
     
     if (!pregeneratedData?.A || !pregeneratedData?.C) {
