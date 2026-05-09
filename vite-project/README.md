@@ -1,16 +1,35 @@
-# React + Vite
+# Калькулятор для курсовой работы (CourseWorkCalc)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение для выполнения специализированных расчетов, разработанное в рамках курсовой работы. Построено с использованием современных инструментов для быстрой и эффективной разработки.
 
-Currently, two official plugins are available:
+## 📋 О проекте
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Этот проект представляет собой удобный онлайн-калькулятор, предназначенный для автоматизации сложных вычислений. Он создан, чтобы облегчить процесс расчетов и визуализации данных.
 
-## React Compiler
+Проект написан на **React** с использованием сборщика **Vite**, что обеспечивает высокую скорость работы и мгновенную перезагрузку модулей (HMR).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Используемые технологии
 
-## Expanding the ESLint configuration
+*   [React](https://reactjs.org/) — библиотека для создания пользовательских интерфейсов.
+*   [Vite](https://vitejs.dev/) — быстрый инструмент сборки и сервер для разработки.
+*   [JavaScript](https://developer.mozilla.org/ru/docs/Web/JavaScript) — язык программирования.
+*   [ESLint](https://eslint.org/) — инструмент для поиска и устранения проблем в коде.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Установка и запуск
+
+1.  **Клонируйте репозиторий:**
+    ```bash
+    git clone https://github.com/A-hil/CourseWorkCalc.git
+Перейдите в папку с проектом:
+
+bash
+cd CourseWorkCalc/vite-project
+Установите зависимости:
+
+bash
+npm install
+Запустите сервер для разработки:
+
+bash
+npm run dev
+Откройте приложение в браузере, перейдя по адресу http://localhost:5173, который отобразится в терминале.
