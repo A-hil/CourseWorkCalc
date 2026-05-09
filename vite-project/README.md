@@ -53,15 +53,35 @@ npm run dev
 
 Структура проекта
 vite-project/
-├── public/          # Статические файлы
-├── src/             # Исходный код приложения
-│   ├── components/  # React-компоненты
-│   ├── App.jsx      # Главный компонент
-│   └── main.jsx     # Точка входа
-├── index.html       # Главная HTML-страница
-├── package.json     # Зависимости и скрипты
-├── vite.config.js   # Конфигурация Vite
-└── eslint.config.js # Конфигурация ESLint
+├── public/                      # статические файлы (favicon, robots.txt и т.п.)
+├── src/
+│   ├── assets/                  # изображения, шрифты, иконки
+│   ├── components/              # переиспользуемые UI-компоненты
+│   │   └── YChart.jsx           # компонент графиков (на базе recharts)
+│   ├── core/                    # бизнес-логика, утилиты, контекст
+│   │   ├── JS/                  # JavaScript-модули расчётов
+│   │   │   ├── calculations.js  # основные вычисления
+│   │   │   ├── ExcelExport.js   # экспорт в Excel (exceljs + file-saver)
+│   │   │   └── txtExport.js     # экспорт в текстовый файл
+│   │   ├── stores/              # управление состоянием (контекст / сторы)
+│   │   │   └── ...              # (файлы сторов при необходимости)
+│   │   ├── Test/                # модульные тесты (Jest)
+│   │   │   ├── sum.js           # вспомогательная функция для тестов
+│   │   │   └── sum.test.js      # тест для sum.js
+│   │   ├── DataContext.jsx      # React Context для глобальных данных
+│   │   ├── InputNum.jsx         # компонент поля ввода числа
+│   │   └── ResultsBlock.jsx     # блок отображения результатов расчётов
+│   ├── App.css                  # стили главного компонента (Tailwind + кастом)
+│   ├── App.jsx                  # корневой компонент приложения
+│   ├── index.css                # глобальные стили (включая Tailwind)
+│   └── main.jsx                 # точка входа (рендер App в DOM)
+├── .gitignore                   # игнорируемые файлы для Git
+├── eslint.config.js             # конфигурация ESLint
+├── index.html                   # HTML-шаблон (Vite)
+├── package-lock.json            # точные версии зависимостей
+├── package.json                 # список зависимостей и скриптов (приведён выше)
+├── README.md                    # документация проекта
+└── vite.config.js               # конфигурация Vite (плагины, алиасы и т.д.)
 
 Деплой проекта
 Проект размещён на GitHub Pages (настроен скрипт npm run deploy).
@@ -70,14 +90,13 @@ https://a-hil.github.io/CourseWorkCalc/
 
 Скриншоты интерфейса
 #### Главный экран с формой ввода
-![Главный экран]<img width="928" height="721" alt="{0F2884CC-D294-4BCC-A055-AB8D493E0007}" src="https://github.com/user-attachments/assets/a4619403-bc51-46f9-bcb9-4ed3e8989ffe" />
-
+<img width="928" height="721" alt="{0F2884CC-D294-4BCC-A055-AB8D493E0007}" src="https://github.com/user-attachments/assets/a4619403-bc51-46f9-bcb9-4ed3e8989ffe" />
 
 #### Результаты рассчетов
-![Результаты]<img width="695" height="781" alt="{EE871263-1CAB-4DC8-9B2D-F049A3E15B3B}" src="https://github.com/user-attachments/assets/2143a703-efa3-4392-9c52-34f023cd663f" />
+<img width="695" height="781" alt="{EE871263-1CAB-4DC8-9B2D-F049A3E15B3B}" src="https://github.com/user-attachments/assets/2143a703-efa3-4392-9c52-34f023cd663f" />
 
 ### График 
-![График]<img width="698" height="343" alt="{5C6BD860-87C7-41CE-BE14-D5509A3E7DC7}" src="https://github.com/user-attachments/assets/7513a3b7-864d-4f6c-a37e-41f66a042680" />
+<img width="698" height="343" alt="{5C6BD860-87C7-41CE-BE14-D5509A3E7DC7}" src="https://github.com/user-attachments/assets/7513a3b7-864d-4f6c-a37e-41f66a042680" />
 
 
 Планы по развитию
