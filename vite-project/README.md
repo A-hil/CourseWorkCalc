@@ -53,34 +53,35 @@ npm run dev
 
 Структура проекта
 vite-project/
-├── public/ # статические файлы (favicon, robots.txt)
+├── public/                      # статические файлы (favicon, robots.txt и т.п.)
 ├── src/
-│ ├── assets/ # изображения, шрифты
-│ ├── components/
-│ │ └── YChart.jsx # графики (recharts)
-│ ├── core/
-│ │ ├── JS/
-│ │ │ ├── calculations.js # основные вычисления
-│ │ │ ├── ExcelExport.js # экспорт в Excel
-│ │ │ └── txtExport.js # экспорт в TXT
-│ │ ├── stores/ # контекст / сторы
-│ │ ├── Test/
-│ │ │ ├── sum.js
-│ │ │ └── sum.test.js # тест Jest
-│ │ ├── DataContext.jsx
-│ │ ├── InputNum.jsx
-│ │ └── ResultsBlock.jsx
-│ ├── App.css
-│ ├── App.jsx
-│ ├── index.css
-│ └── main.jsx
-├── .gitignore
-├── eslint.config.js
-├── index.html
-├── package-lock.json
-├── package.json
-├── README.md
-└── vite.config.js
+│   ├── assets/                  # изображения, шрифты, иконки
+│   ├── components/              # переиспользуемые UI-компоненты
+│   │   └── YChart.jsx           # компонент графиков (на базе recharts)
+│   ├── core/                    # бизнес-логика, утилиты, контекст
+│   │   ├── JS/                  # JavaScript-модули расчётов
+│   │   │   ├── calculations.js  # основные вычисления
+│   │   │   ├── ExcelExport.js   # экспорт в Excel (exceljs + file-saver)
+│   │   │   └── txtExport.js     # экспорт в текстовый файл
+│   │   ├── stores/              # управление состоянием (контекст / сторы)
+│   │   │   └── ...              # (файлы сторов при необходимости)
+│   │   ├── Test/                # модульные тесты (Jest)
+│   │   │   ├── sum.js           # вспомогательная функция для тестов
+│   │   │   └── sum.test.js      # тест для sum.js
+│   │   ├── DataContext.jsx      # React Context для глобальных данных
+│   │   ├── InputNum.jsx         # компонент поля ввода числа
+│   │   └── ResultsBlock.jsx     # блок отображения результатов расчётов
+│   ├── App.css                  # стили главного компонента (Tailwind + кастом)
+│   ├── App.jsx                  # корневой компонент приложения
+│   ├── index.css                # глобальные стили (включая Tailwind)
+│   └── main.jsx                 # точка входа (рендер App в DOM)
+├── .gitignore                   # игнорируемые файлы для Git
+├── eslint.config.js             # конфигурация ESLint
+├── index.html                   # HTML-шаблон (Vite)
+├── package-lock.json            # точные версии зависимостей
+├── package.json                 # список зависимостей и скриптов (приведён выше)
+├── README.md                    # документация проекта
+└── vite.config.js               # конфигурация Vite (плагины, алиасы и т.д.)
 
 Деплой проекта
 Проект размещён на GitHub Pages (настроен скрипт npm run deploy).
