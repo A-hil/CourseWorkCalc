@@ -30,6 +30,19 @@ export default function InputNum() {
         r: 1
     });
 
+    //Для кнопки пример заданны значения 
+    const fillExample = () => {
+  const exampleData = {
+    m: 3,
+    b: 5,
+    rangeMin: 1,
+    rangeMax: 10,
+    C0: 1,    
+    r: 2,     
+  };
+  setFormData(exampleData);
+  setIsOdd(false); 
+};
 
     //Обработчик изменения полей 
     const handleChange = (e) => {
