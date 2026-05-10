@@ -12,7 +12,7 @@ import 'tailwindcss';
         rangeMax: 10,
         C0: 1,
         r: 1,
-        g: 0.5
+        g: 0.1
     };
 
 export default function InputNum() {
@@ -30,18 +30,31 @@ export default function InputNum() {
         r: 1
     });
 
-    //Для кнопки пример заданны значения 
     const fillExample = () => {
-  const exampleData = {
-    m: 3,
-    b: 5,
-    rangeMin: 1,
-    rangeMax: 10,
-    C0: 1,    
-    r: 2,     
-  };
-  setFormData(exampleData);
-  setIsOdd(false); 
+    const randomIsOdd = Math.random() < 0.5;
+    setIsOdd(randomIsOdd);
+    const m = Math.floor(Math.random() * 4) + 2;
+    let b;
+    do {
+        b = Math.floor(Math.random() * 21) - 10;
+    } while (b === 0);
+
+    const rangeMin = Math.floor(Math.random() * 5);
+    const rangeMax = rangeMin + Math.floor(Math.random() * 10) + 5;
+    const C0 = parseFloat((Math.random() * 5 + 0.5).toFixed(1));
+    const r = parseFloat((Math.random() * 3 + 0.5).toFixed(1));
+    const steps = [0.1, 0.25, 0.5, 1];
+    const g = steps[Math.floor(Math.random() * steps.length)];
+    
+    setFormData({
+        m,
+        b,
+        rangeMin,
+        rangeMax,
+        C0,
+        r,
+        g
+    });
 };
 
     //Обработчик изменения полей 
@@ -129,6 +142,9 @@ const generatePreviewData = useCallback(() => {
     const rMin = Number(formData.rangeMin) || 0;
     const rMax = Number(formData.rangeMax) || 0;
 
+    const C0 = Number(formData.C0) || 0;
+    const r = Number(formData.r) || 1;
+
     // Генерация матрицы A
     const previewA = [];
     for (let i = 0; i < m; i++) {
@@ -148,10 +164,10 @@ const generatePreviewData = useCallback(() => {
             previewC[i] = previewC[i-1] + previewC[i-2];
         }
     } else {
-        for (let i = 0; i < m; i++) {
-            previewC[i] = parseFloat((formData.C0 + i * formData.r).toFixed(2));
-        }
+    for (let i = 0; i < m; i++) {
+        previewC[i] = parseFloat((C0 + i * r).toFixed(2));
     }
+}
     
     return { A: previewA, C: previewC, size: m };
 }, [formData.m, formData.rangeMin, formData.rangeMax, isOdd, formData.C0, formData.r]);
@@ -184,7 +200,7 @@ const generatePreviewData = useCallback(() => {
             Перезагрузить
         </button>
 
-        <button className="flex-1 sm:flex-none px-4 py-2 bg-white border border-gray-200 rounded-lg font-semibold text-gray-600 hover:bg-gray-300 hover:text-white hover:border-gray-100 transition-all duration-300 text-xs">
+        <button onClick={fillExample} className="flex-1 sm:flex-none px-4 py-2 bg-white border border-gray-200 rounded-lg font-semibold text-gray-600 hover:bg-gray-300 hover:text-white hover:border-gray-100 transition-all duration-300 text-xs">
             Пример
         </button>
 
@@ -209,10 +225,11 @@ const generatePreviewData = useCallback(() => {
 <div className='grid grid-cols-3 gap-2 sm:gap-5 items-start'>
     
     <div className="group flex flex-col">
-        <label className="block text-gray-700 text-[10px] sm:text-sm font-semibold mb-2 flex items-center gap-1 min-h-[32px] sm:min-h-[40px] leading-tight">
+        <label htmlFor="input-m" className="block text-gray-700 text-[10px] sm:text-sm font-semibold mb-2 flex items-center gap-1 min-h-[32px] sm:min-h-[40px] leading-tight">
             Размерность A (m)
         </label>
         <input
+            id="input-m"
             type="number"
             name="m"
             value={formData.m}
@@ -223,10 +240,11 @@ const generatePreviewData = useCallback(() => {
     </div>
 
     <div className="group flex flex-col">
-        <label className="block text-gray-700 text-[10px] sm:text-sm font-semibold mb-2 flex items-center gap-1 min-h-[32px] sm:min-h-[40px] leading-tight">
+        <label htmlFor="input-b" className="block text-gray-700 text-[10px] sm:text-sm font-semibold mb-2 flex items-center gap-1 min-h-[32px] sm:min-h-[40px] leading-tight">
             Переменная b
         </label>
         <input
+            id="input-b"
             type="number"
             name="b"
             value={formData.b}
@@ -236,10 +254,11 @@ const generatePreviewData = useCallback(() => {
     </div>
 
     <div className="group flex flex-col">
-        <label className="block text-gray-700 text-[10px] sm:text-sm font-semibold mb-2 flex items-center gap-1 min-h-[32px] sm:min-h-[40px] leading-tight">
+        <label  htmlFor="input-g" className="block text-gray-700 text-[10px] sm:text-sm font-semibold mb-2 flex items-center gap-1 min-h-[32px] sm:min-h-[40px] leading-tight">
             Шаг (g)
         </label>
         <input
+            id="input-g"
             type="number"
             name="g"
             value={formData.g}
@@ -254,10 +273,11 @@ const generatePreviewData = useCallback(() => {
     
                         {/* ЛЕВАЯ ЧАСТЬ: Тип варианта (Выпадающий список или переключатель) */}
                         <div className="flex-1 w-full">
-                            <label className="block text-gray-400 text-xs uppercase tracking-wider font-bold mb-3 text-left">
+                            <label htmlFor="variant-select" className="block text-gray-400 text-xs uppercase tracking-wider font-bold mb-3 text-left">
                                 Тип варианта
                             </label>
                             <select 
+                                id="variant-select"
                                 value={isOdd} 
                                 onChange={(e) => setIsOdd(e.target.value === 'true')}
                                 className="w-full bg-white border border-gray-100 rounded-xl px-4 py-3 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 appearance-none cursor-pointer"
@@ -302,12 +322,13 @@ const generatePreviewData = useCallback(() => {
                             'max-h-0 opacity-0'}`}>
                             <div className="space-y-4 pt-2">
                                 <div>
-                                    <label className="block
+                                    <label htmlFor="input-C0" className="block
                                     text-gray-700 text-sm
                                     font-semibold mb-2">
                                         C[0] (первый член прогрессии)
                                     </label>
                                     <input
+                                        id="input-C0"
                                         type="number"
                                         name="C0"
                                         value={formData.C0}
@@ -321,12 +342,13 @@ const generatePreviewData = useCallback(() => {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block
+                                    <label htmlFor="input-r" className="block
                                     text-gray-700 text-sm
                                     font-semibold mb-2">
                                         r (разность прогрессии)
                                     </label>
                                     <input
+                                        id="input-r"
                                         type="number"
                                         name="r"
                                         value={formData.r}
