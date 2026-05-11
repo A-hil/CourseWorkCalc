@@ -59,19 +59,18 @@ export function DataProvider({ children }) {
     };
     
 
-    const updateData = (newData, pregeneratedData) => {      
+const updateData = (newData, pregeneratedData) => {
+    setAppData(prev => {
         try {
             validateData(newData);
-            
-            // Проверка перед расчетом
+
             if (!pregeneratedData?.A || !pregeneratedData?.C) {
                 throw new Error('pregeneratedData не содержит A или C');
             }
-            
-            setAppData(prev => {
-                const results = calculateAll(newData, pregeneratedData, prev.enableSorting);
+
+            const results = calculateAll(newData, pregeneratedData, prev.enableSorting);
+
             return {
-                
                 ...prev,
                 formData: newData,
                 pregeneratedData: pregeneratedData,
@@ -80,17 +79,17 @@ export function DataProvider({ children }) {
                 error: null,
                 lastUpdated: results.meta?.timestamp || new Date().toISOString()
             };
-        });
-    } catch (error) {
-        console.log('🔴 Ошибка:', error.message);
-        setAppData(prev => ({ 
-            ...prev, 
-            error: error.message, 
-            isLoading: false,
-            results: null,
-            calculatedSteps: []
-        }));
-    }
+        } catch (error) {
+            console.log('🔴 Ошибка:', error.message);
+            return {
+                ...prev,
+                error: error.message,
+                isLoading: false,
+                results: null,
+                calculatedSteps: []
+            };
+        }
+    });
 };
 
     return (

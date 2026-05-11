@@ -174,17 +174,10 @@ export default function ResultsBlock() {
     </button>
   </div>
 </div>
-
         </div>
-        
-     <div className='mx-auto max-w-7xl pt-8 pb-8'>
-        <YChart 
-        yOriginal={Y}   
-        ySorted={Ysorted}  
-        
-    />
-    </div>   
-
+            <div className='mx-auto max-w-7xl pt-8 pb-8'>
+    <YChart yOriginal={final.Y} ySorted={final.Ysorted} />
+</div>
         </div>
     );
 }

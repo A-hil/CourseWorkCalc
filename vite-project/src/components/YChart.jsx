@@ -11,14 +11,13 @@ import {
 
 export default function YChart({ yOriginal, ySorted }) {
 
-        if (!yOriginal || !Array.isArray(yOriginal)) {
-        return (
-            <div className="h-[400px] w-full flex items-center justify-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100">
-                <p className="text-gray-400 text-xs uppercase tracking-widest font-bold">Ожидание данных для графика...</p>
-            </div>
-        );
-    }
 
+        if (!yOriginal || !Array.isArray(yOriginal) || yOriginal.length === 0) {
+    return (
+        <div className="h-[400px] w-full flex items-center justify-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100">
+        </div>
+    );
+}
     // 2. Форматируем данные: объединяем два массива в один для Recharts
     const chartData = yOriginal.map((val, i) => ({
         index: i,

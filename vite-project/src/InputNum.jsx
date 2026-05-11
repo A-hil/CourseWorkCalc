@@ -27,7 +27,8 @@ export default function InputNum() {
         rangeMin: 0,
         rangeMax: 10,
         C0: 1,
-        r: 1
+        r: 1,
+        g: 0.5
     });
 
     const fillExample = () => {
