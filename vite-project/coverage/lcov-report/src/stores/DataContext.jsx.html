@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.07% </span>
+                <span class="strong">23.68% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/39</span>
+                <span class='fraction'>9/38</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/8</span>
+                <span class='fraction'>2/7</span>
             </div>
         
             
@@ -172,8 +172,7 @@
 <a name='L107'></a><a href='#L107'>107</a>
 <a name='L108'></a><a href='#L108'>108</a>
 <a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L110'></a><a href='#L110'>110</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -237,28 +236,27 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -344,19 +342,18 @@ export function DataProvider({ children }) {
     };
     
 &nbsp;
-    const updateData = <span class="fstat-no" title="function not covered" >(n</span>ewData, pregeneratedData) =&gt; {      
+const updateData = <span class="fstat-no" title="function not covered" >(n</span>ewData, pregeneratedData) =&gt; {
+<span class="cstat-no" title="statement not covered" >    setAppData(<span class="fstat-no" title="function not covered" >pr</span>ev =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        try {</span>
 <span class="cstat-no" title="statement not covered" >            validateData(newData);</span>
-            
-            // Проверка перед расчетом
+&nbsp;
 <span class="cstat-no" title="statement not covered" >            if (!pregeneratedData?.A || !pregeneratedData?.C) {</span>
 <span class="cstat-no" title="statement not covered" >                throw new Error('pregeneratedData не содержит A или C');</span>
             }
-            
-<span class="cstat-no" title="statement not covered" >            setAppData(<span class="fstat-no" title="function not covered" >pr</span>ev =&gt; {</span>
-                const results = <span class="cstat-no" title="statement not covered" >calculateAll(newData, pregeneratedData, prev.enableSorting);</span>
+&nbsp;
+            const results = <span class="cstat-no" title="statement not covered" >calculateAll(newData, pregeneratedData, prev.enableSorting);</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >            return {</span>
-                
                 ...prev,
                 formData: newData,
                 pregeneratedData: pregeneratedData,
@@ -365,17 +362,17 @@ export function DataProvider({ children }) {
                 error: null,
                 lastUpdated: results.meta?.timestamp || new Date().toISOString()
             };
-        });
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.log('🔴 Ошибка:', error.message);</span>
-<span class="cstat-no" title="statement not covered" >        setAppData(<span class="fstat-no" title="function not covered" >pr</span>ev =&gt; (<span class="cstat-no" title="statement not covered" >{ </span></span>
-            ...prev, 
-            error: error.message, 
-            isLoading: false,
-            results: null,
-            calculatedSteps: []
-        }));
-    }
+        } catch (error) {
+<span class="cstat-no" title="statement not covered" >            console.log('🔴 Ошибка:', error.message);</span>
+<span class="cstat-no" title="statement not covered" >            return {</span>
+                ...prev,
+                error: error.message,
+                isLoading: false,
+                results: null,
+                calculatedSteps: []
+            };
+        }
+    });
 };
 &nbsp;
     return (
@@ -400,7 +397,7 @@ export function useAppData() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-05-10T23:56:23.910Z
+                at 2026-05-12T21:48:54.120Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
